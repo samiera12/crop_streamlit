@@ -24,7 +24,7 @@ with st.form("input_form"):
 
 # Prediction
 if submitted:
-     # Bar chart of inputs
+    # Prepare dictionary from inputs
     features = {
         "Nitrogen (N)": N,
         "Phosphorus (P)": P,
@@ -34,10 +34,13 @@ if submitted:
         "pH": ph,
         "Rainfall (mm)": rainfall
     }
+
+    # ✅ Create chart safely
     df = pd.DataFrame.from_dict(features, orient='index', columns=["Value"])
     st.subheader("🌿 Input Summary")
     st.bar_chart(df)
 
+    # Predict crop
     input_data = np.array([[N, P, K, temperature, humidity, ph, rainfall]])
     prediction = model.predict(input_data)
     st.success(f"✅ Recommended Crop: **{prediction[0].capitalize()}**")
